@@ -244,7 +244,8 @@ cp -R $TOOLCHAIN/include/libpng16/ $TOOLCHAIN/include/libpng/
 
 cd ..
 
-wget https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/7321branch/evansport-source/libjpeg-turbo-1.x.txz
+#-----libjpeg-turbo-1.x.txz
+wget https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/evansport-source/libjpeg-turbo-1.x.txz
 tar xJf libjpeg-turbo-1.x.txz
 cd libjpeg-turbo-1.x
 ./configure --prefix=${TOOLCHAIN} --host=${TARGET} --build=x86_64-linux-gnu --enable-shared --disable-static --with-jpeg8
@@ -252,9 +253,10 @@ make
 make install
 cd ..
 
-wget https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2
-tar xjf libusb-1.0.23.tar.bz2
-cd libusb-1.0.23
+#-----libusb-1.0.24.tar.bz2
+wget https://github.com/libusb/libusb/releases/download/v1.0.24/libusb-1.0.24.tar.bz2
+tar xjf libusb-1.0.24.tar.bz2
+cd libusb-1.0.24
 ./configure --prefix=${TOOLCHAIN} --host=${TARGET} --build=x86_64-linux-gnu --enable-shared --disable-static --disable-udev
 sed -i "s/^hardcode_into_libs=yes/hardcode_into_libs=no/" libtool
 make
@@ -264,16 +266,18 @@ cd ..
 sudo rm -rf /var/packages/
 sudo mkdir -p /var/packages/
 
-wget https://gitlab.com/sane-project/backends/uploads/9e718daff347826f4cfe21126c8d5091/sane-backends-1.0.28.tar.gz
-tar xzf sane-backends-1.0.28.tar.gz
-cd sane-backends-1.0.28
+#-----sane-backends-1.0.32.tar.gz
+wget https://gitlab.com/sane-project/backends/uploads/104f09c07d35519cc8e72e604f11643f/sane-backends-1.0.32.tar.gz
+tar xzf sane-backends-1.0.32.tar.gz
+cd sane-backends-1.0.32
 
 #-----the dll loader for SANE backend drivers appears to ignore rpath, so we have to build with a fixed destination path appropriate for the Synology package
 export SYNODEST=/var/packages/sane-backends/target
 
 #-----Fix a plustek backend bug
 #-----https://gitlab.com/sane-project/backends/issues/113
-sed -r -i "s/(\(dev->adj\.glampoff != -1\) && \(dev->adj\.)r(lampoff != -1\)\) \{)/\1b\2/" backend/plustek-usbcal.c
+#-----no more needed with sane-backends-1.0.32
+#sed -r -i "s/(\(dev->adj\.glampoff != -1\) && \(dev->adj\.)r(lampoff != -1\)\) \{)/\1b\2/" backend/plustek-usbcal.c
 
 #-----Removed avahi support as this caused random segmentation faults during device detection via libsane
 #-----https://github.com/SimulPiscator/AirSane/issues/24
@@ -333,6 +337,11 @@ set(CMAKE_CXX_FLAGS "\${CMAKE_CXX_FLAGS} \${COMPILER_FLAGS}" CACHE STRING "" FOR
 set(CMAKE_EXE_LINKER_FLAGS "-Wl,-L\$ENV{TOOLCHAIN}/lib,-rpath,\'\\\$ORIGIN/../lib:\\\$ORIGIN\'")
 EOF
 
+#-----zlib
+#why not picking zlib from zlib.net ?
+#wget https://zlib.net/zlib-1.2.11.tar.gz
+#tar xJf zlib-1.2.11.tar.gz
+#cd zlib-1.2.11
 wget https://www.dropbox.com/s/p8z3rcbryj4v77f/DSM5565-src.tar.xz
 tar xvJf DSM5565-src.tar.xz zlib-1.x/
 cd zlib-1.x
