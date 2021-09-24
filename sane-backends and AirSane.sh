@@ -12,8 +12,8 @@
 #-----Disable USB
 #-----Boot CentOS 7 Minimal Install DVD
 
-sudo yum update
-reboot
+#sudo yum update
+#reboot
 sudo yum group install "Development Tools"
 #----add 32bit packages
 sudo yum install ncurses-libs.i686 glibc.i686 libstdc++.i686
@@ -61,6 +61,7 @@ export DL_PATH="https://sourceforge.net/projects/dsgpl/files/Tool%20Chain/DSM%20
 #-----http://www.arm.com/products/processors/technologies/dsp-simd.php
 #-----http://www.marvell.com/embedded-processors/kirkwood/assets/88f6282-3_pb.pdf
 #-----This CPU arch is not supported for AirSane since devkit GCC version is just too old for C++11 support (GCC 4.6.4, but 4.7 needed) https://gcc.gnu.org/projects/cxx-status.html#cxx11
+:'
 wget "${DL_PATH}/Marvell%2088F628x%20Linux%202.6.32/6281-gcc464_glibc215_88f6281-GPL.txz"
 tar xJf 6281-gcc464_glibc215_88f6281-GPL.txz
 wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM6.0/ds.6281-6.0.dev.txz"
@@ -70,7 +71,7 @@ export CROSS_PREFIX=arm-marvell-linux-gnueabi
 export TOOLCHAIN=/usr/local/${CROSS_PREFIX}
 export TARGET=${CROSS_PREFIX}
 export MARCH="-march=armv5te -mtune=marvell-f -mtune=xscale"
-
+'
 
 
 
@@ -78,6 +79,7 @@ export MARCH="-march=armv5te -mtune=marvell-f -mtune=xscale"
 #-----http://www.marvell.com/embedded-processors/armada-300/assets/Marvell_ARMADA_370_SoC.pdf
 #-----http://www.arm.com/products/processors/technologies/vector-floating-point.php
 #-----since DSM 6.0 hard float ABI is used
+:'
 wget "${DL_PATH}/Marvell%20Armada%20370%20Linux%203.2.40/armada370-gcc493_glibc220_hard-GPL.txz"
 tar xJf armada370-gcc493_glibc220_hard-GPL.txz
 wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM6.0/ds.armada370-6.0.dev.txz"
@@ -89,7 +91,7 @@ export TOOLCHAIN=/usr/local/${CROSS_PREFIX}
 #-----Tune for Marvell PJ4 dual issue core (two instructions per clock)
 #-----Thumb-2 can be used on ARMv6 or newer with no performance drop
 export MARCH="-march=armv7-a -mcpu=marvell-pj4 -mtune=marvell-pj4 -mhard-float -mfpu=vfpv3-d16 -mthumb"
-
+'
 
 
 
@@ -118,6 +120,7 @@ export MARCH="-march=armv7-a -mcpu=cortex-a9 -mfpu=neon -mhard-float -mthumb"
 
 #-----Realtek RTD1296 and Marvell Armada 3720 SoCs are based on quad 64bit ARM Cortex-A53 cores
 #-----https://developer.arm.com/products/processors/cortex-a/cortex-a53
+:'
 export DL_PATH="https://sourceforge.net/projects/dsgpl/files/DSM%206.1%20Tool%20Chains"
 wget "${DL_PATH}/Intel%20x86%20Linux%204.4.15%20%28Rtd1296%29/rtd1296-gcc494_glibc220_armv8-GPL.txz"
 tar xJf rtd1296-gcc494_glibc220_armv8-GPL.txz
@@ -127,9 +130,9 @@ export DEV_DL_ROOT="sysroot"
 export CROSS_PREFIX=aarch64-unknown-linux-gnueabi
 export TARGET=${CROSS_PREFIX}
 export TOOLCHAIN=/usr/local/${CROSS_PREFIX}
-#-----it seems that in general neon should be used as the fpu when present unless there's a specific reason not to use it
+#-----it seems that in general neon should be used as the fpu when present unless theres a specific reason not to use it
 export MARCH="-march=armv8-a -mcpu=cortex-a53"
-
+'
 
 
 
@@ -137,6 +140,7 @@ export MARCH="-march=armv8-a -mcpu=cortex-a53"
 #-----Some QorIQ models have e500mc cores with true FPUs but these are not used in 2013 series Synology NAS
 #-----http://en.wikipedia.org/wiki/QorIQ
 #-----http://cache.freescale.com/files/32bit/doc/fact_sheet/QP1022FS.pdf?fpsp=1
+:'
 wget "${DL_PATH}/PowerPC%20QorIQ%20Linux%202.6.32/qoriq-gcc493_glibc220_hard_qoriq-GPL.txz"
 tar xJf qoriq-gcc493_glibc220_hard_qoriq-GPL.txz
 wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM6.0/ds.qoriq-6.0.dev.txz"
@@ -146,12 +150,13 @@ export CROSS_PREFIX=powerpc-e500v2-linux-gnuspe
 export TARGET=${CROSS_PREFIX}
 export TOOLCHAIN=/usr/local/${CROSS_PREFIX}
 export MARCH="-mcpu=8548 -mhard-float -mfloat-gprs=double"
-
+'
 
 
 
 #-----Intel Evansport 32bit Atom-derived SoC with support for hardware decoding of VC-1, H.264, MPEG-4, MPEG2, AAC and hardware encoding of H.264
 #-----http://www.anandtech.com/show/8020/synology-ds214play-intel-evansport-almost-done-right/9
+:'
 wget "${DL_PATH}/Intel%20x86%20Linux%203.2.40%20%28Evansport%29/evansport-gcc493_glibc220_linaro_i686-GPL.txz"
 tar xJf evansport-gcc493_glibc220_linaro_i686-GPL.txz
 wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM6.0/ds.evansport-6.0.dev.txz"
@@ -161,13 +166,14 @@ export CROSS_PREFIX=i686-pc-linux-gnu
 export TARGET=${CROSS_PREFIX}
 export MARCH="-march=atom"
 export TOOLCHAIN=/usr/local/${CROSS_PREFIX}
-
+'
 
 
 
 #-----Since DSM 6.0 all other Intel CPUs use x86_64 toolchain with SSSE3
 #-----unlike the others this toolchain has an external dependency on libz
 #sudo apt-get install libz1:i386
+:'
 wget "${DL_PATH}/Intel%20x86%20Linux%203.10.77%20%28Pineview%29/x64-gcc493_glibc220_linaro_x86_64-GPL.txz"
 tar xJf x64-gcc493_glibc220_linaro_x86_64-GPL.txz
 wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM6.0/ds.cedarview-6.0.dev.txz"
@@ -176,7 +182,7 @@ export DEV_DL_ROOT="sys-root"
 export CROSS_PREFIX=x86_64-pc-linux-gnu
 export TARGET=x86_64-pc-linux-gnu
 export TOOLCHAIN=/usr/local/${CROSS_PREFIX}
-
+'
 
 
 
@@ -391,7 +397,7 @@ make
 #-----PERMISSIONS - both saned and airsaned must run as root on syno since there is no udev support
 
 #-----connect to the syno to export the compiled binaries
-sudo mount.nfs 192.168.1.x:/volume1/linux /mnt/syno
+#sudo mount.nfs 192.168.1.x:/volume1/linux /mnt/syno
 
 #-----to clean a source build folder: 'make distclean'
 
