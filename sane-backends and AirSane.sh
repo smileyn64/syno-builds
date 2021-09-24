@@ -102,12 +102,12 @@ export MARCH="-march=armv7-a -mcpu=marvell-pj4 -mtune=marvell-pj4 -mhard-float -
 #-----http://www.arm.com/products/processors/cortex-a/cortex-a9.php
 #-----http://www.arm.com/products/processors/technologies/neon.php
 #-----Since DSM 6.0 Armada 375 finally has hard float ABI and therefore gains NEON support
-wget "${DL_PATH}/Marvell%20Armada%20375%20Linux%203.2.40/armada375-gcc493_glibc220_hard-GPL.txz"
-tar xJf armada375-gcc493_glibc220_hard-GPL.txz
+wget "${DL_PATH}/Marvell%20Armada%20375%20Linux%203.2.101/armada375-gcc750_glibc226_hard-GPL.txz"
+tar xJf armada375-gcc750_glibc226_hard-GPL.txz
 #-----Marvell gave all the ARMv7 toolchains the same name so rename to allow concurrent installations
 mv arm-unknown-linux-gnueabi/ arm-cortexa9-linux-gnueabi/
-wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM6.0/ds.armada375-6.0.dev.txz"
-export DEV_DL="ds.armada375-6.0.dev.txz"
+wget "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.armada375-7.0.dev.txz"
+export DEV_DL="ds.armada375-7.0.dev.txz"
 export DEV_DL_ROOT="sysroot"
 export CROSS_PREFIX=arm-unknown-linux-gnueabi
 export TARGET=${CROSS_PREFIX}
