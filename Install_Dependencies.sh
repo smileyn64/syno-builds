@@ -21,5 +21,9 @@ cd nasm-2.15.05
 make
 sudo make install
 cd ..
-rm -r -f nasm-2.15.05
+rm -rf nasm-2.15.05
+rm -rf nasm-2.15.05.tar.bz2
 cd ..
+
+cd ..
+rm -rf temp
