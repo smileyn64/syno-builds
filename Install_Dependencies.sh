@@ -23,7 +23,6 @@ sudo make install
 cd ..
 rm -rf nasm-2.15.05
 rm -rf nasm-2.15.05.tar.bz2
-cd ..
 
 #-----set up Synology toolchain
 export DL_PATH="https://sourceforge.net/projects/dsgpl/files/Tool%20Chain/DSM%207.0.0%20Tool%20Chains"
